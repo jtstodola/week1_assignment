@@ -3,6 +3,17 @@ def prompt(message)
   gets.chop
 end
 
+
+## This function doesn't need to reassign the output variable.
+# def result_output(guesses)
+#  if guesses == 1
+#    "You're a mind reader!"
+#  elsif guesses <= 4
+#    "Most impressive."
+#  ...
+## No need for a variable because the IF statement returns a value, which then
+## becomes the return of the function. And it's faster because variable value
+## assignment is expensive.
 def result_output(guesses)
   if guesses == 1
     output = "You're a mind reader!"
@@ -25,6 +36,11 @@ def main
   level = prompt "Pick a difficulty level (1, 2, or 3)"
   invalid_number = true
     
+  ## how about level = level.to_i right here so you don't
+  ## have to do it on every condition test?
+  ## 
+  ## I might move this into a separate function. I really
+  ## like how you alter the prompt based on the difficulty.
   while(invalid_number) do    
   
     if(level.to_i == 1)
@@ -52,10 +68,14 @@ def main
   incorrect_answer = true
     
   guesses = 0
-  
+
   while(incorrect_answer) do
     if guess.to_i < number.to_i
       guess = prompt "Too low. Guess again: "
+      
+      ## You set the incorrect_answer to true by default above the while.
+      ## so there's no reason to reset it. You only need to set it
+      ## if they win.
       incorrect_answer = true
       
     elsif guess.to_i > number.to_i
@@ -67,12 +87,15 @@ def main
         incorrect_answer = true
       
     else
+      ## I think this adds an extra guess since your guesses get accumulated
+      ## below after the IF statement finishes.
       guesses += 1
       puts "You got it in #{guesses} guesses! #{result_output(guesses)}" 
       incorrect_answer = false
 
     end
 
+    ## right here - adding 1 to guesses.
     guesses += 1
         
   end
@@ -95,5 +118,7 @@ def play
 end
 
 main
+
+## nice. I think I'd put "play" inside of "main" at the end tho.
 
 play
